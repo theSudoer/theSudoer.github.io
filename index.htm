@@ -1,0 +1,918 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vicenzo C.G | SOC Analyst & Cybersecurity Specialist</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* --- Welcome Animation Styles --- */
+        .welcome-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: #0d0d0d;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            /* Animation: fade out after 3.5s, stay faded out */
+            animation: fadeOutOverlay 1s ease-out 3.5s forwards; 
+        }
+
+        .glitch-welcome {
+            font-size: clamp(2em, 8vw, 5em); /* Responsive font size */
+            font-weight: 200;
+            color: #ff0000;
+            letter-spacing: 8px;
+            text-transform: uppercase;
+            white-space: nowrap;
+            overflow: hidden;
+            border-right: 4px solid #ff0000; /* Cursor for typing */
+            /* Animation: type for 2s, then blink cursor */
+            animation: 
+                typing 2s steps(10, end) 0.5s forwards, /* 10 steps for "VICENZO C.G" */
+                blink-cursor 1s step-end infinite 2.5s; /* Start blinking after typing */
+        }
+
+        /* Keyframes for typing */
+        @keyframes typing {
+            from { width: 0; }
+            to { width: 100%; }
+        }
+
+        /* Keyframes for the cursor blinking */
+        @keyframes blink-cursor {
+            from, to { border-color: transparent; }
+            50% { border-color: #ff0000; }
+        }
+
+        /* Keyframes for fading out the whole overlay */
+        @keyframes fadeOutOverlay {
+            0% {
+                opacity: 1;
+                visibility: visible;
+            }
+            99% {
+                opacity: 0;
+                visibility: visible;
+            }
+            100% {
+                opacity: 0;
+                visibility: hidden; /* Hide it completely */
+                pointer-events: none; /* Make sure it's not clickable */
+            }
+        }
+        /* --- End Welcome Animation --- */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: #0d0d0d;
+            color: #d1d1d1; 
+            line-height: 1.9; 
+            overflow-x: hidden;
+            font-weight: 300;
+        }
+
+        .scanline {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: repeating-linear-gradient(
+                0deg,
+                rgba(255, 0, 0, 0.03) 0px,
+                transparent 1px,
+                transparent 2px,
+                rgba(255, 0, 0, 0.03) 3px
+            );
+            pointer-events: none;
+            z-index: 1000;
+            opacity: 0.1; 
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 30px;
+            position: relative;
+            z-index: 1;
+        }
+
+        header {
+            padding: 80px 0 60px;
+            text-align: center;
+            position: relative;
+            border-bottom: 1px solid rgba(255, 0, 0, 0.1);
+        }
+
+        .glitch {
+            font-size: 3.5em;
+            font-weight: 200;
+            color: #ff0000;
+            letter-spacing: 8px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+
+        .subtitle {
+            font-size: 1.1em;
+            color: #bbb; /* Brighter */
+            margin-top: 15px;
+            font-weight: 300;
+            letter-spacing: 1px;
+        }
+
+        .hero-image {
+            /* This class is no longer used, but kept for reference */
+            max-width: 500px;
+            width: 90%;
+            margin: 50px auto 40px;
+            display: block;
+            opacity: 0.85;
+            filter: drop-shadow(0 0 30px rgba(255, 0, 0, 0.4));
+        }
+
+        .tagline {
+            color: #999; /* Brighter */
+            margin-top: 40px; /* Added margin to compensate for image removal */
+            font-size: 1em;
+            font-weight: 300;
+        }
+
+        .terminal-cursor {
+            display: inline-block;
+            width: 8px;
+            height: 18px;
+            background: #ff0000;
+            animation: blink 1s infinite;
+            margin-left: 2px;
+        }
+
+        @keyframes blink {
+            0%, 49% { opacity: 1; }
+            50%, 100% { opacity: 0; }
+        }
+
+        .badges {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+
+        .badge {
+            background: transparent;
+            border: 1px solid rgba(255, 0, 0, 0.3);
+            padding: 8px 18px;
+            border-radius: 4px; 
+            font-size: 0.85em;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s;
+            font-weight: 300;
+        }
+
+        .badge:hover {
+            border-color: #ff0000;
+            background: rgba(255, 0, 0, 0.05);
+        }
+
+        .badge i {
+            color: #ff0000;
+            font-size: 0.9em;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            margin-top: 30px;
+        }
+
+        .social-links a {
+            color: #999; /* Brighter */
+            font-size: 1.5em;
+            transition: all 0.3s;
+            display: inline-block;
+        }
+
+        .social-links a:hover {
+            color: #ff0000;
+            transform: translateY(-3px);
+        }
+
+        .section {
+            margin: 80px 0;
+            padding: 0;
+            position: relative;
+        }
+
+        .section-title {
+            font-size: 1.6em;
+            font-weight: 300;
+            color: #ff0000;
+            margin-bottom: 40px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .section-title::before {
+            content: '';
+            width: 40px;
+            height: 1px;
+            background: #ff0000;
+        }
+
+        .section-title i {
+            font-size: 0.7em;
+            opacity: 0.7;
+        }
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        .about-card {
+            background: #181818; 
+            padding: 30px;
+            border: 1px solid #2a2a2a; 
+            border-left: 2px solid #ff0000;
+            transition: all 0.3s;
+            border-radius: 4px; 
+        }
+
+        .about-card:hover {
+            background: #202020; 
+            border-color: #333;
+            border-left-width: 4px;
+            border-left-color: #ff0000;
+        }
+
+        .about-card h3 {
+            color: #ff0000;
+            margin-bottom: 15px;
+            font-weight: 300;
+            font-size: 1.1em;
+        }
+
+        .about-card h3 i {
+            margin-right: 10px;
+            opacity: 0.8;
+        }
+
+        .about-card p {
+            color: #bbb; /* Brighter */
+            font-size: 0.95em;
+            line-height: 1.7;
+        }
+
+        .experience-item, .project-card {
+            background: #181818; 
+            padding: 35px; 
+            margin-bottom: 25px;
+            border: 1px solid #2a2a2a; 
+            transition: all 0.3s;
+            border-radius: 4px; 
+        }
+
+        .experience-item:hover, .project-card:hover {
+            padding-left: 35px; 
+            background: #202020;
+            border-color: #333;
+            transform: translateY(-3px); 
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .experience-item:last-child, .project-card:last-child {
+            border-bottom: 1px solid #2a2a2a; 
+        }
+
+        .experience-item h3, .project-card h3 {
+            color: #ff0000;
+            font-size: 1.3em;
+            font-weight: 300;
+            margin-bottom: 10px;
+            letter-spacing: 1px;
+        }
+
+        .experience-meta, .project-meta {
+            color: #999; /* Brighter */
+            font-size: 0.9em;
+            margin-bottom: 20px;
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            font-weight: 300;
+        }
+
+        .experience-meta i, .project-meta i {
+            color: #ff0000;
+            margin-right: 5px;
+        }
+
+        .experience-item ul, .project-card ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .experience-item li, .project-card li {
+            padding: 8px 0;
+            padding-left: 20px;
+            position: relative;
+            color: #bbb; /* Brighter */
+            font-size: 0.95em;
+        }
+
+        .experience-item li:before, .project-card li:before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 16px;
+            width: 4px;
+            height: 4px;
+            background: #ff0000;
+            transform: rotate(45deg);
+        }
+
+        .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .tech-tag {
+            background: transparent;
+            color: #bbb; /* Brighter */
+            padding: 6px 14px;
+            border: 1px solid rgba(255, 0, 0, 0.2);
+            font-size: 0.8em;
+            font-weight: 300;
+            transition: all 0.3s;
+            border-radius: 4px; 
+        }
+
+        .tech-tag:hover {
+            border-color: #ff0000;
+            color: #ff0000;
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+
+        .skill-category {
+            background: #181818; 
+            padding: 25px;
+            border: 1px solid #2a2a2a; 
+            transition: all 0.3s;
+            border-radius: 4px; 
+        }
+
+        .skill-category:hover {
+            border-color: #333;
+            background: #202020;
+        }
+
+        .skill-category h4 {
+            color: #ff0000;
+            margin-bottom: 20px;
+            font-size: 1em;
+            font-weight: 300;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .skill-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 10px 0;
+            color: #bbb; /* Brighter */
+            font-size: 0.9em;
+            font-weight: 300;
+        }
+
+        .skill-item i {
+            color: #ff0000;
+            font-size: 0.7em;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            margin: 50px 0;
+        }
+
+        .stat-card {
+            text-align: center;
+            padding: 30px;
+            background: #181818; 
+            border: 1px solid #2a2a2a; 
+            transition: all 0.3s;
+            border-radius: 4px; 
+        }
+
+        .stat-card:hover {
+            border-color: #ff0000; 
+            background: #202020;
+        }
+
+        .stat-number {
+            font-size: 2.5em;
+            font-weight: 200;
+            color: #ff0000;
+            margin-bottom: 10px;
+        }
+
+        .stat-label {
+            color: #bbb; /* Brighter */
+            font-size: 0.9em;
+            font-weight: 300;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .certs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px; 
+            margin-top: 30px;
+        }
+
+        .cert-card {
+            background: #181818; 
+            padding: 40px 30px;
+            text-align: center;
+            border: 1px solid #2a2a2a; 
+            transition: all 0.3s;
+            border-radius: 4px; 
+        }
+
+        .cert-card:hover {
+            border-color: #ff0000; 
+            background: #202020;
+        }
+
+        .cert-card i {
+            font-size: 2.5em;
+            color: #ff0000;
+            margin-bottom: 20px;
+            opacity: 0.8;
+        }
+
+        .cert-card h4 {
+            color: #e0e0e0;
+            margin-bottom: 10px;
+            font-weight: 300;
+            font-size: 1.1em;
+        }
+
+        .cert-card p {
+            color: #999; /* Brighter */
+            font-size: 0.9em;
+            font-weight: 300;
+        }
+
+        .cta-section {
+            text-align: center;
+            padding: 80px 40px;
+            background: #181818; 
+            border: 1px solid #2a2a2a; 
+            margin: 80px 0;
+            position: relative;
+            border-radius: 4px; 
+        }
+
+        .cta-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 1px;
+            background: #ff0000;
+        }
+
+        .cta-section h2 {
+            color: #ff0000;
+            font-size: 2em;
+            margin-bottom: 20px;
+            font-weight: 300;
+            letter-spacing: 2px;
+        }
+
+        .cta-section p {
+            font-size: 1.1em;
+            margin-bottom: 40px;
+            color: #bbb; /* Brighter */
+            font-weight: 300;
+        }
+
+        .cta-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 15px 40px;
+            text-decoration: none;
+            font-weight: 300;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s;
+            font-size: 1em;
+            letter-spacing: 1px;
+            border-radius: 4px; 
+        }
+
+        .btn-primary {
+            background: #ff0000;
+            color: #000;
+            border: 1px solid #ff0000;
+        }
+
+        .btn-primary:hover {
+            background: transparent;
+            color: #ff0000;
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: #ff0000;
+            border: 1px solid #ff0000;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 0, 0, 0.05);
+        }
+
+        footer {
+            text-align: center;
+            padding: 60px 20px 40px;
+            color: #999; /* Brighter */
+            border-top: 1px solid rgba(255, 0, 0, 0.1);
+            margin-top: 80px;
+        }
+
+        footer p {
+            margin: 10px 0;
+            font-weight: 300;
+        }
+
+        .quote {
+            font-style: italic;
+            color: #bbb; /* Brighter */
+            margin-top: 20px;
+            font-size: 0.95em;
+        }
+
+        .divider {
+            width: 60px;
+            height: 1px;
+            background: #ff0000;
+            margin: 60px auto;
+            opacity: 0.3;
+        }
+
+        @media (max-width: 768px) {
+            .glitch {
+                font-size: 2.5em;
+                letter-spacing: 4px;
+            }
+
+            .section {
+                padding: 0;
+                margin: 60px 0;
+            }
+
+            .section-title {
+                font-size: 1.3em;
+            }
+
+            .container {
+                padding: 0 20px;
+            }
+        }
+
+        .circuit-line {
+            position: absolute;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #ff0000, transparent);
+            opacity: 0.2;
+        }
+    </style>
+</head>
+<body>
+    <div class="welcome-overlay">
+        <h1 class="glitch-welcome">VICENZO C.G</h1>
+    </div>
+
+    <div class="scanline"></div>
+    
+    <div class="container">
+        <header>
+            <h1 class="glitch">VICENZO C.G</h1>
+            <p class="subtitle">SOC Analyst | Cybersecurity Specialist | Automation Engineer</p>
+                        
+            <p class="tagline">Defending systems. Automating threats. Building secure futures.<span class="terminal-cursor"></span></p>
+            <div class="badges">
+                <span class="badge"><i class="fas fa-globe"></i> EN | PT | ES</span>
+                <span class="badge"><i class="fas fa-clock"></i> 24/7 SOC Ready</span>
+                <span class="badge"><i class="fas fa-map-marker-alt"></i> South Wales, UK</span>
+                <span class="badge"><i class="fas fa-graduation-cap"></i> BSc Cyber Security</span>
+            </div>
+            <div class="social-links">
+                <a href="https://linkedin.com" target="_blank" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                <a href="https://github.com" target="_blank" title="GitHub"><i class="fab fa-github"></i></a>
+                <a href="mailto:your.email@example.com" title="Email"><i class="fas fa-envelope"></i></a>
+            </div>
+        </header>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-number">500+</div>
+                <div class="stat-label">Daily Alerts Managed</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">70%</div>
+                <div class="stat-label">Workload Reduction</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">5+</div>
+                <div class="stat-label">Team Members Led</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">3</div>
+                <div class="stat-label">Languages Fluent</div>
+            </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <section class="section">
+            <h2 class="section-title"><i class="fas fa-user-shield"></i> About</h2>
+            <p style="color: #bbb; margin-bottom: 40px;">I'm an aspiring SOC Analyst and BSc Cyber Security student with a passion for automation, threat detection, and incident response. I successfully designed and deployed a Splunk-based SOC automation pipeline that manages 500+ daily alerts using n8n and AI integration.</p>
+                        
+            <div class="about-grid">
+                <div class="about-card">
+                    <h3><i class="fas fa-robot"></i> Automation Expert</h3>
+                    <p>Reduced manual SOC workload by 70% through intelligent automation and AI integration</p>
+                </div>
+                <div class="about-card">
+                    <h3><i class="fas fa-shield-alt"></i> Security Focus</h3>
+                    <p>Specialized in SIEM management, threat hunting, and incident response operations</p>
+                </div>
+                <div class="about-card">
+                    <h3><i class="fas fa-users"></i> Community Leader</h3>
+                    <p>Leading Cyber Dragons Helpdesk, providing cybersecurity support to the community</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2 class="section-title"><i class="fas fa-briefcase"></i> Experience</h2>
+                        
+            <div class="experience-item">
+                <h3>Cyber Dragons Helpdesk Lead</h3>
+                <div class="experience-meta">
+                    <span><i class="fas fa-building"></i> University of South Wales</span>
+                    <span><i class="fas fa-calendar"></i> Sep 2024 - Present</span>
+                </div>
+                <ul>
+                    <li>Leading a team of 5 student volunteers providing IT and cybersecurity support</li>
+                    <li>Delivering interactive workshops on online safety, threat awareness, and phishing prevention</li>
+                    <li>Managing multi-layer technical troubleshooting across hardware, software, and network systems</li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2 class="section-title"><i class="fas fa-graduation-cap"></i> Education</h2>
+                        
+            <div class="experience-item">
+                <h3>BSc (Hons) Applied Cyber Security</h3>
+                <div class="experience-meta">
+                    <span><i class="fas fa-university"></i> University of South Wales</span>
+                    <span><i class="fas fa-calendar"></i> Sep 2024 - Jul 2027</span>
+                </div>
+                <ul>
+                    <li>Accreditation: BCS Chartered Institute & NCSC Gold Standard Academic Centre</li>
+                    <li>Specializations: Penetration Testing, Digital Forensics, Incident Response, SOC Operations</li>
+                    <li>Technical Focus: SIEM Management (Splunk, ELK), Vulnerability Assessment, Security Automation</li>
+                </ul>
+            </div>
+            <div class="experience-item">
+                <h3>International Baccalaureate Diploma</h3>
+                <div class="experience-meta">
+                    <span><i class="fas fa-school"></i> St Andrews International School, Bangkok</span>
+                </div>
+                <ul>
+                    <li>Higher Level: Computer Science, Physics, Psychology</li>
+                    <li>Extended Essay: Research on anonymity in Onion Routing (Tor) and ethical implications</li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2 class="section-title"><i class="fas fa-rocket"></i> Projects</h2>
+                        
+            <div class="project-card">
+                <h3>SOC Automation Pipeline</h3>
+                <div class="tech-stack">
+                    <span class="tech-tag">Splunk</span>
+                    <span class="tech-tag">n8n</span>
+                    <span class="tech-tag">ChatGPT API</span>
+                    <span class="tech-tag">Slack</span>
+                    <span class="tech-tag">Python</span>
+                </div>
+                <p style="margin-top: 20px; color: #bbb;">A production-ready SOC automation system that revolutionizes alert management:</p>
+                <ul>
+                    <li>Integrated Splunk SIEM with AI-powered alert analysis</li>
+                    <li>Automated incident triage and severity classification</li>
+                    <li>Real-time Slack notifications for security team collaboration</li>
+                    <li>Processed 500+ alerts and handled 5 simulated brute force attacks</li>
+                    <li>Reduced manual workload by 70% through intelligent automation</li>
+                </ul>
+            </div>
+            <div class="project-card">
+                <h3>Secure Encrypted Login System</h3>
+                <div class="tech-stack">
+                    <span class="tech-tag">Python</span>
+                    <span class="tech-tag">SQL</span>
+                    <span class="tech-tag">Email MFA</span>
+                    <span class="tech-tag">STRIDE</span>
+                </div>
+                <p style="margin-top: 20px; color: #bbb;">Enterprise-grade authentication system for online gaming:</p>
+                <ul>
+                    <li>Implemented bcrypt password hashing with salt</li>
+                    <li>Deployed email-based Multi-Factor Authentication</li>
+                    <li>Conducted comprehensive STRIDE threat modeling</li>
+                    <li>Ensured CIA triad: Confidentiality, Integrity, Availability</li>
+                </ul>
+            </div>
+            <div class="project-card">
+                <h3>Automated OSINT Reconnaissance Tool</h3>
+                <div class="tech-stack">
+                    <span class="tech-tag">Python</span>
+                    <span class="tech-tag">Google Dorks</span>
+                    <span class="tech-tag">OSINT</span>
+                </div>
+                <p style="margin-top: 20px; color: #bbb;">Ethical hacking tool for security assessments:</p>
+                <ul>
+                    <li>Automated PII-based reconnaissance for attack surface mapping</li>
+                    <li>Generates and executes Google Dork queries systematically</li>
+                    <li>Uncovers exposed data, vulnerabilities, and associated assets</li>
+                    <li>Built for ethical hacking simulations and penetration testing</li>
+                </ul>
+            </div>
+            <div class="project-card">
+                <h3>VEX Robotics Championship Winner</h3>
+                <div class="tech-stack">
+                    <span class="tech-tag">C++</span>
+                    <span class="tech-tag">Control Systems</span>
+                    <span class="tech-tag">Embedded Programming</span>
+                </div>
+                <p style="margin-top: 20px; color: #bbb;">Competition robotics achievement:</p>
+                <ul>
+                    <li>Programmed competition robot with advanced control algorithms</li>
+                    <li>Led team to victory in 2018 VEX Robotics Championship</li>
+                    <li>Developed debugging and system integration skills applicable to security automation</li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2 class="section-title"><i class="fas fa-tools"></i> Skills</h2>
+                        
+            <div class="skills-grid">
+                <div class="skill-category">
+                    <h4>SOC Operations</h4>
+                    <div class="skill-item"><i class="fas fa-square"></i> Alert Interpretation</div>
+                    <div class="skill-item"><i class="fas fa-square"></i> Incident Response</div>
+                    <div class="skill-item"><i class="fas fa-square"></i> Threat Hunting</div>
+                    <div class="skill-item"><i class="fas fa-square"></i> SIEM Management</div>
+                </div>
+                                
+                <div class="skill-category">
+                    <h4>SIEM & Monitoring</h4>
+                    <div class="skill-item"><i class="fas fa-square"></i> Splunk</div>
+                    <div class="skill-item"><i class="fas fa-square"></i> ELK Stack</div>
+                    <div class="skill-item"><i class="fas fa-square"></i> QRadar</div>
+                    <div class="skill-item"><i class="fas fa-square"></i> Wazuh</div>
+                </div>
+                                
+                <div class="skill-category">
+                    <h4>Security Testing</h4>
+                    <div class="skill-item"><i class="fas fa-square"></i> Penetration Testing</div>
+                    <div class="skill-item"><i class="fas fa-square"></i> Vulnerability Assessment</div>
+                    <div class="skill-item"><i class="fas fa-square"></i> Ethical Hacking</div>
+                    <div class="skill-item"><i class="fas fa-square"></i> Web Security</div>
+                </div>
+                                
+                <div class="skill-category">
+                    <h4>Programming</h4>
+                    <div class="skill-item"><i class="fas fa-square"></i> Python</div>
+                    <div class="skill-item"><i class="fas fa-square"></i> JavaScript</div>
+                    <div class="skill-item"><i class="fas fa-square"></i> Bash</div>
+                    <div class="skill-item"><i class="fas fa-square"></i> PowerShell</div>
+                </div>
+                                
+                <div class="skill-category">
+                    <h4>Automation</h4>
+                    <div class="skill-item"><i class="fas fa-square"></i> Security Orchestration</div>
+                    <div class="skill-item"><i class="fas fa-square"></i> Workflow Automation</div>
+                    <div class="skill-item"><i class="fas fa-square"></i> AI Integration</div>
+                    <div class="skill-item"><i class="fas fa-square"></i> Scripting</div>
+                </div>
+                                
+                <div class="skill-category">
+                    <h4>Security Tools</h4>
+                    <div class="skill-item"><i class="fas fa-square"></i> Wireshark</div>
+                    <div class="skill-item"><i class="fas fa-square"></i> Metasploit</div>
+                    <div class="skill-item"><i class="fas fa-square"></i> Burp Suite</div>
+                    <div class="skill-item"><i class="fas fa-square"></i> Nmap</div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2 class="section-title"><i class="fas fa-certificate"></i> Certifications</h2>
+            <div class="certs-grid">
+                <div class="cert-card">
+                    <i class="fas fa-award"></i>
+                    <h4>Google Cybersecurity</h4>
+                    <p>Professional Certificate</p>
+                </div>
+                <div class="cert-card">
+                    <i class="fas fa-shield-alt"></i>
+                    <h4>More Coming Soon</h4>
+                    <p>Currently pursuing additional certifications</p>
+                </div>
+            </div>
+        </section>
+
+        <div class="cta-section">
+            <h2>Let's Build Something Secure</h2>
+            <p>Open to SOC Analyst, Incident Response, and Threat Hunting opportunities</p>
+            <div class="cta-buttons">
+                <a href="mailto:your.email@example.com" class="btn btn-primary">
+                    <i class="fas fa-envelope"></i> Contact Me
+                </a>
+                <a href="https://linkedin.com" target="_blank" class="btn btn-secondary">
+                    <i class="fab fa-linkedin"></i> LinkedIn
+                </a>
+                <a href="https://github.com" target="_blank" class="btn btn-secondary">
+                    <i class="fab fa-github"></i> GitHub
+                </a>
+            </div>
+        </div>
+
+        <footer>
+            <p>&copy; 2025 Vicenzo C.G</p>
+            <p class="quote">"Security is not a product, but a process" - Bruce Schneier</p>
+        </footer>
+
+    </div>
+
+    <script>
+        // Smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+
+    </script>
+</body>
+</html>
