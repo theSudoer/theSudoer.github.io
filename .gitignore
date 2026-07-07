@@ -1,2 +1,5 @@
 # Local Claude Code tooling (launch config, preview, etc.)
 .claude/
+
+# Local backup of previous landing page (do not publish)
+index.previous.htm
